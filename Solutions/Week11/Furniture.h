@@ -11,8 +11,6 @@ public:
 	static int COUNTER;
 
 public:
-	Furniture(const double height = 0, const double width = 0, const double length = 0, const int quantity = 0);
-
 	int getID() const;
 
 	int getQuantity() const;
@@ -27,8 +25,16 @@ public:
 
 	virtual const std::string getStrComparator() const;
 
+	virtual Furniture* clone() = 0;
+
 protected:
-	virtual double calculatePrice() const;
+	virtual double calculatePrice() const = 0;
+
+protected:
+	Furniture(const double height = 0, const double width = 0, const double length = 0, const int quantity = 0);
+	Furniture(const Furniture& furniture);
+
+	void setID(const int newID);
 
 protected:
 	int m_id;

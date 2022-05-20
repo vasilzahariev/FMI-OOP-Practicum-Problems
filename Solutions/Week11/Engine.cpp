@@ -37,10 +37,12 @@ void Engine::deleteData() {
 void Engine::allocData(size_t newCapacity) {
 	if (m_size >= newCapacity) newCapacity = m_size + 1;
 
-	Furniture** blockMem = new Furniture * [newCapacity] { nullptr, };
+	Furniture** blockMem = new Furniture*[newCapacity] { nullptr, };
+
+	Furniture::COUNTER = 0;
 
 	for (size_t i = 0; i < m_size; ++i)
-		*blockMem[i] = *m_data[i];
+		blockMem[i] = m_data[i]->clone();
 
 	deleteData();
 	m_data = blockMem;
@@ -120,7 +122,7 @@ Furniture* Engine::getFurnitureTypeFromUser() const {
 	else if (furnitureType == "table")
 		return new Table();
 
-	return new Furniture();
+	return nullptr;
 }
 
 const std::string Engine::getValidFurnitureTypeFromUser() const {

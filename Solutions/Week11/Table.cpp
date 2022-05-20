@@ -5,6 +5,11 @@ Table::Table(const double height, const double width, const double length, const
 	m_price = calculatePrice();
 }
 
+Table::Table(const Table& table)
+		: Furniture(table) {
+	m_type = table.m_type;
+}
+
 void Table::read(std::istream& in) {
 	Furniture::read(in);
 
@@ -37,6 +42,10 @@ const std::string Table::getStrComparator() const {
 	return "Table " +
 		Furniture::getStrComparator() + " " +
 		std::to_string(m_type == TableType::LIVING_ROOM ? 0 : 1);
+}
+
+Furniture* Table::clone() {
+	return new Table(m_height, m_width, m_length, m_quantity, m_type);
 }
 
 double Table::calculatePrice() const {
