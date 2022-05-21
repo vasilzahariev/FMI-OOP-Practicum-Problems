@@ -10,5 +10,7 @@ int main() {
 	std::cout << fm->getNumber() << std::endl;
 	std::cout << fm->getSalary() << std::endl;
 
+	delete fm;
+
 	return 0;
 }
