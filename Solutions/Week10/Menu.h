@@ -35,6 +35,7 @@ private:
 	size_t m_size;
 	size_t m_capacity;
 
+	void deleteData();
 	void allocMem(size_t newCapacity);
 
 	bool empty() const;

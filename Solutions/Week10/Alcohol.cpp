@@ -17,3 +17,7 @@ std::string Alcohol::getInfo() const {
 
 	return info;
 }
+
+MenuItem* Alcohol::clone() const {
+	return new Alcohol(m_name, m_quantity, m_description, m_price, m_servingType, m_alcoholPercentage);
+}

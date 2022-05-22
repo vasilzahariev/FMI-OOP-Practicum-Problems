@@ -7,14 +7,7 @@ Menu& Menu::getInstance() {
 }
 
 Menu::~Menu() {
-	for (size_t index = 0; index < m_size; ++index) {
-		delete m_data[index];
-
-		m_data[index] = nullptr;
-	}
-
-	delete[] m_data;
-	m_data = nullptr;
+	deleteData();
 }
 
 void Menu::addItem(std::string_view type) {
@@ -28,15 +21,26 @@ Menu::Menu() : m_data(nullptr), m_size(0), m_capacity(0) {
 	allocMem(2);
 }
 
+void Menu::deleteData() {
+	for (size_t index = 0; index < m_size; ++index) {
+		delete m_data[index];
+
+		m_data[index] = nullptr;
+	}
+
+	delete[] m_data;
+	m_data = nullptr;
+}
+
 void Menu::allocMem(size_t newCapacity) {
 	if (newCapacity <= m_size) newCapacity = m_size + 1;
 	
 	MenuItem** blockOfMem = new MenuItem*[newCapacity];
 
 	for (size_t index = 0; index < m_size; ++index)
-		blockOfMem[index] = m_data[index];
+		blockOfMem[index] = m_data[index]->clone();
 
-	delete[] m_data;
+	deleteData();
 	m_data = blockOfMem;
 	m_capacity = newCapacity;
 }

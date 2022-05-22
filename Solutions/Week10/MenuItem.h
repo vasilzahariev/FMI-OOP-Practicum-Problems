@@ -13,7 +13,9 @@ public:
 
 	virtual std::string getInfo() const;
 
-private:
+	virtual MenuItem* clone() const;
+
+protected:
 	std::string m_name;
 	int m_quantity;
 	std::string m_description;

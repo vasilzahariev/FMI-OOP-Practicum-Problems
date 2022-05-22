@@ -10,7 +10,9 @@ public:
 
 	virtual std::string getInfo() const override;
 
-private:
+	MenuItem* clone() const override;
+
+protected:
 	ServingType m_servingType;
 };
 

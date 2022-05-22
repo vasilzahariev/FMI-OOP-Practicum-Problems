@@ -11,6 +11,8 @@ public:
 
 	std::string getInfo() const override;
 
+	MenuItem* clone() const override;
+
 private:
 	double m_alcoholPercentage;
 };

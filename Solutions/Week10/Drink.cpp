@@ -15,3 +15,7 @@ std::string Drink::getInfo() const {
 
 	return info;
 }
+
+MenuItem* Drink::clone() const {
+	return new Drink(m_name, m_quantity, m_description, m_price, m_servingType);
+}

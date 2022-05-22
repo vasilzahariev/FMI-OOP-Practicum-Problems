@@ -9,6 +9,8 @@ public:
 
 	std::string getInfo() const override;
 
+	MenuItem* clone() const override;
+
 private:
 	bool isBig;
 	bool isVegan;

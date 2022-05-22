@@ -18,3 +18,7 @@ std::string MenuItem::getInfo() const {
 
 	return info;
 }
+
+MenuItem* MenuItem::clone() const {
+	return new MenuItem(m_name, m_quantity, m_description, m_price);
+}
