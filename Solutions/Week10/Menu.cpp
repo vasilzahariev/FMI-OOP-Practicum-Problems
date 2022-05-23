@@ -46,13 +46,7 @@ void Menu::allocMem(size_t newCapacity) {
 }
 
 bool Menu::empty() const {
-	if (m_size == 0) {
-		std::cout << "The menu is empty!" << std::endl;
-
-		return true;
-	}
-
-	return false;
+	return m_size == 0;
 }
 
 void Menu::addItemToMenu(MenuItem* item) {
@@ -173,7 +167,11 @@ void Menu::createAlcohol() {
 }
 
 void Menu::printCheapestMenuItem() const {
-	if (empty()) return;
+	if (empty()) {
+		std::cout << "Menu is empty!" << std::endl;
+
+		return;
+	}
 
 	MenuItem* cheapest = m_data[0];
 
@@ -198,7 +196,11 @@ unsigned Menu::getNumberOfAlcoholFreeDrinks() const {
 }
 
 void Menu::getDrinkWithTheHighestAlcoholPercentage() const {
-	if (empty()) return;
+	if (empty()) {
+		std::cout << "Menu is empty!" << std::endl;
+
+		return;
+	}
 
 	Alcohol* drinkWithTheHighestAlcoholPercentage = nullptr;
 
@@ -217,7 +219,11 @@ void Menu::getDrinkWithTheHighestAlcoholPercentage() const {
 }
 
 void Menu::print() const {
-	if (empty()) return;
+	if (empty()) {
+		std::cout << "Menu is empty!" << std::endl;
+
+		return;
+	}
 
 	std::cout << "Menu:" << std::endl;
 

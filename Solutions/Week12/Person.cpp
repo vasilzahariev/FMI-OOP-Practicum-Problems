@@ -1,8 +1,5 @@
 #include "Person.h"
 
-Person::Person() {
-}
-
 Person::Person(std::string_view name)
 		 : m_name(name) {
 }

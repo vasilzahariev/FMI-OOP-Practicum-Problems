@@ -7,9 +7,8 @@
 class Table : public Furniture {
 public:
 	Table(const double height = 0, const double width = 0, const double length = 0, const int quantity = 0, const TableType type = TableType::LIVING_ROOM);
-	Table(const Table& table);
 
-	void read(std::istream& in) override;
+	void read(std::istream& in = std::cin) override;
 
 	const std::string getInfo() const override;
 
@@ -21,6 +20,8 @@ protected:
 	double calculatePrice() const override;
 
 private:
+	const double PRICE_MULTIPLIER = 15;
+
 	TableType m_type;
 };
 

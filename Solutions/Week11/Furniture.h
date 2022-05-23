@@ -11,6 +11,8 @@ public:
 	static int COUNTER;
 
 public:
+	void setID(const int newID);
+
 	int getID() const;
 
 	int getQuantity() const;
@@ -19,7 +21,7 @@ public:
 
 	double getPrice() const;
 
-	virtual void read(std::istream& in);
+	virtual void read(std::istream& in = std::cin);
 
 	virtual const std::string getInfo() const;
 
@@ -32,9 +34,6 @@ protected:
 
 protected:
 	Furniture(const double height = 0, const double width = 0, const double length = 0, const int quantity = 0);
-	Furniture(const Furniture& furniture);
-
-	void setID(const int newID);
 
 protected:
 	int m_id;

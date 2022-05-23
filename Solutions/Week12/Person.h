@@ -7,7 +7,6 @@
 
 class Person {
 public:
-	Person();
 	Person(std::string_view name);
 
 	std::string_view getName() const;

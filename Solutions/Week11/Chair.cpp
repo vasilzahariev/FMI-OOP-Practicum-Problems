@@ -5,13 +5,9 @@ Chair::Chair(const double height, const double width, const double length, const
 	m_price = calculatePrice();
 }
 
-Chair::Chair(const Chair& chair)
-		: Furniture(chair) {
-	m_type = chair.m_type;
-}
-
 void Chair::read(std::istream& in) {
 	Furniture::read(in);
+	m_price = calculatePrice();
 
 	std::cout << "Enter Chair Type (wooden | plastic | metal): ";
 
@@ -45,9 +41,14 @@ const std::string Chair::getStrComparator() const {
 }
 
 Furniture* Chair::clone() {
-	return new Chair(m_height, m_width, m_length, m_quantity, m_type);
+	Furniture* chair = new Chair(m_height, m_width, m_length, m_quantity, m_type);
+
+	chair->setID(m_id);
+	--Furniture::COUNTER;
+
+	return chair;
 }
 
 double Chair::calculatePrice() const {
-	return m_height * m_width * 9;
+	return m_height * m_width * PRICE_MULTIPLIER;
 }

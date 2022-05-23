@@ -1,16 +1,15 @@
 #include <iostream>
 
-#include "FacultyMember.h"
+#include "Assistant.h"
 
 int main() {
-	std::string name = "Evgenia Velikova";
-	FacultyMember* fm = new FacultyMember(name, 25, 1000);
+	Assistant* svilen = new Assistant("Svilen Andonov", 43665, 400);
 
-	std::cout << fm->getName() << std::endl;
-	std::cout << fm->getNumber() << std::endl;
-	std::cout << fm->getSalary() << std::endl;
+	std::cout << svilen->getName() << std::endl;
+	std::cout << svilen->getNumber() << std::endl;
+	std::cout << svilen->getSalary() << std::endl;
 
-	delete fm;
+	delete svilen;
 
 	return 0;
 }

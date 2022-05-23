@@ -3,19 +3,11 @@
 int Furniture::COUNTER = 0;
 
 Furniture::Furniture(const double height, const double width, const double length, const int quantity)
-	: m_id(COUNTER++), m_height(height), m_width(width), m_length(length), m_quantity(quantity) {
+	: m_id(++COUNTER), m_height(height), m_width(width), m_length(length), m_quantity(quantity) {
 }
 
-Furniture::Furniture(const Furniture& furniture) {
-	m_height = furniture.m_height;
-	m_width = furniture.m_width;
-	m_length = furniture.m_length;
-	m_quantity = furniture.m_quantity;
-	m_price = furniture.m_price;
-}
-
-void Furniture::setID(const int newID) {
-	m_id = newID;
+void Furniture::setID(const int newId) {
+	m_id = newId;
 }
 
 int Furniture::getID() const {
@@ -41,6 +33,9 @@ void Furniture::read(std::istream& in) {
 	std::cout << "Enter Lenght: ";
 	in >> m_length;
 
+	std::cout << "Enter Width: ";
+	in >> m_width;
+
 	std::cout << "Enter Quantity: ";
 	in >> m_quantity;
 }
@@ -51,6 +46,7 @@ const std::string Furniture::getInfo() const {
 	result += "Furniture with ID: " + std::to_string(m_id) + "\n";
 	result += "Height: " + std::to_string(m_height) + "\n";
 	result += "Length: " + std::to_string(m_length) + "\n";
+	result += "Width: " + std::to_string(m_width) + "\n";
 	result += "Quantity: " + std::to_string(m_quantity) + "\n";
 	result += "Price: " + std::to_string(m_price) + "\n";
 
@@ -58,5 +54,5 @@ const std::string Furniture::getInfo() const {
 }
 
 const std::string Furniture::getStrComparator() const {
-	return std::to_string(m_height) + " " + std::to_string(m_length) + " " + std::to_string(m_price);
+	return std::to_string(m_height) + " " + std::to_string(m_length) + " " + std::to_string(m_width);
 }

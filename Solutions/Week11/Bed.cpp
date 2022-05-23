@@ -5,9 +5,6 @@ Bed::Bed(const double height, const double width, const double length, const int
 	m_price = calculatePrice();
 }
 
-Bed::Bed(const Bed& bed) : Furniture(bed) {
-}
-
 const std::string Bed::getInfo() const {
 	std::string result = Furniture::getInfo();
 
@@ -21,9 +18,14 @@ const std::string Bed::getStrComparator() const {
 }
 
 Furniture* Bed::clone() {
-	return new Bed(m_height, m_width, m_length, m_quantity);
+	Furniture* bed = new Bed(m_height, m_width, m_length, m_quantity);
+
+	bed->setID(m_id);
+	--Furniture::COUNTER;
+
+	return bed;
 }
 
 double Bed::calculatePrice() const {
-	return m_length * m_height * 22;
+	return m_length * m_height * PRICE_MULTIPLIER;
 }

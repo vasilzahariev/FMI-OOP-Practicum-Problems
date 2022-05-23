@@ -10,10 +10,10 @@
 #include "Chair.h"
 #include "Bed.h"
 
+#include "FurnitureHouse.h"
+
 class Engine {
 public:
-	~Engine();
-
 	static Engine& getInstance();
 
 	void run();
@@ -24,12 +24,7 @@ private:
 	Engine& operator=(const Engine& other) = delete;
 
 private:
-	Furniture** m_data;
-	size_t m_size;
-	size_t m_capacity;
-
-	void deleteData();
-	void allocData(size_t newCapacity);
+	FurnitureHouse m_furnitureHouse;
 
 	void printOperations();
 	void enterOperation(char& operation) const;

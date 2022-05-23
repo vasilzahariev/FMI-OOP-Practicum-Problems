@@ -1,17 +1,12 @@
 #include "Engine.h"
 
-Engine::~Engine() {
-	deleteData();
-}
-
 Engine& Engine::getInstance() {
 	static Engine engine;
 
 	return engine;
 }
 
-Engine::Engine() : m_data(nullptr), m_size(0), m_capacity(0) {
-	allocData(2);
+Engine::Engine() {
 }
 
 void Engine::run() {
@@ -21,32 +16,10 @@ void Engine::run() {
 		printOperations();
 		enterOperation(operation);
 		executeOperation(operation);
+
+		system("pause");
+		system("cls");
 	} while (operation != '5');
-}
-
-void Engine::deleteData() {
-	for (size_t i = 0; i < m_capacity; ++i) {
-		delete m_data[i];
-		m_data[i] = nullptr;
-	}
-
-	delete[] m_data;
-	m_data = nullptr;
-}
-
-void Engine::allocData(size_t newCapacity) {
-	if (m_size >= newCapacity) newCapacity = m_size + 1;
-
-	Furniture** blockMem = new Furniture*[newCapacity] { nullptr, };
-
-	Furniture::COUNTER = 0;
-
-	for (size_t i = 0; i < m_size; ++i)
-		blockMem[i] = m_data[i]->clone();
-
-	deleteData();
-	m_data = blockMem;
-	m_capacity = newCapacity;
 }
 
 void Engine::printOperations() {
@@ -73,6 +46,8 @@ void Engine::executeOperation(const char operation) {
 		printFurnitureByID();
 	else if (operation == '4')
 		printTheMostExpensiveFurniture();
+	else if (operation == '6')
+		m_furnitureHouse.print();
 	else if (operation != '5')
 		std::cout << "Invalid operation!" << std::endl;
 }
@@ -88,16 +63,10 @@ const int Engine::getFurnitureIdFromUser() const {
 }
 
 Furniture* Engine::getFurnitureAtID(const int id) const {
-	for (size_t i = 0; i < m_size; ++i)
-		if (m_data[i]->getID() == id)
-			return m_data[i];
-
-	return nullptr;
+	return m_furnitureHouse.getFurnitureAtID(id);
 }
 
 void Engine::addFurniture() {
-	if (m_size == m_capacity) allocData(m_capacity * 2);
-
 	Furniture* newFurniture = getFurnitureTypeFromUser();
 
 	newFurniture->read(std::cin);
@@ -109,7 +78,7 @@ void Engine::addFurniture() {
 		return;
 	}
 
-	m_data[m_size++] = newFurniture;
+	m_furnitureHouse += newFurniture;
 }
 
 Furniture* Engine::getFurnitureTypeFromUser() const {
@@ -140,9 +109,9 @@ const std::string Engine::getValidFurnitureTypeFromUser() const {
 }
 
 const bool Engine::checkIfFurnitureExists(Furniture* furniture) {
-	for (size_t i = 0; i < m_size; ++i) {
-		if (m_data[i]->getStrComparator() == furniture->getStrComparator()) {
-			m_data[i]->setQuantity(m_data[i]->getQuantity() + furniture->getQuantity());
+	for (size_t i = 0; i < m_furnitureHouse.size(); ++i) {
+		if (m_furnitureHouse[i]->getStrComparator() == furniture->getStrComparator()) {
+			m_furnitureHouse[i]->setQuantity(m_furnitureHouse[i]->getQuantity() + furniture->getQuantity());
 
 			--Furniture::COUNTER;
 
@@ -163,11 +132,7 @@ void Engine::removeFurnitureByID() {
 }
 
 void Engine::removeFurniture(Furniture* furniture) {
-	furniture->setQuantity(furniture->getQuantity() - 1);
-
-	if (furniture->getQuantity() == 0) {
-		std::swap(furniture, m_data[--m_size]);
-	}
+	m_furnitureHouse -= furniture;
 }
 
 void Engine::printFurnitureByID() const {
@@ -180,7 +145,7 @@ void Engine::printFurnitureByID() const {
 }
 
 void Engine::printTheMostExpensiveFurniture() const {
-	if (m_size == 0)
+	if (m_furnitureHouse.size() == 0)
 		std::cout << "There are no furnitures in store!" << std::endl;
 	else
 		std::cout << getTheMostExpensiveFurniture()->getInfo() << std::endl;
@@ -189,10 +154,10 @@ void Engine::printTheMostExpensiveFurniture() const {
 const Furniture* Engine::getTheMostExpensiveFurniture() const {
 	Furniture* mostExpensiveFurniture = nullptr;
 
-	for (size_t i = 0; i < m_size; ++i)
+	for (size_t i = 0; i < m_furnitureHouse.size(); ++i)
 		if (mostExpensiveFurniture == nullptr ||
-			m_data[i]->getPrice() > mostExpensiveFurniture->getPrice())
-			mostExpensiveFurniture = m_data[i];
+			m_furnitureHouse[i]->getPrice() > mostExpensiveFurniture->getPrice())
+			mostExpensiveFurniture = (Furniture*) m_furnitureHouse[i];
 
 	return mostExpensiveFurniture;
 }
